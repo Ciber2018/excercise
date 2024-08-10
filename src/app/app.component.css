@@ -1,4 +1,12 @@
 section{
     width: 500px;    
-    margin: 0 auto;
+    margin: 0 auto;    
+}
+
+h3{
+    text-align: center;
+}
+
+header{
+    margin-bottom: 5%;
 }

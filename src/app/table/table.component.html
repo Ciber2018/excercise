@@ -1,5 +1,38 @@
 @if (covidCases.getDataSize() == 0) {
-    <h3>No tiene</h3>
+    <section class="spinner">
+        <mat-spinner />
+    </section>
+   
 }@else {
-    <h3>Tiene!!!!</h3>
+    <section class="date-range">
+        <mat-form-field>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date" (dateChange)="getDataByRangeDate('start',$event)" name="starInput">
+              <input matEndDate placeholder="End date" (dateChange)="getDataByRangeDate('end',$event)" name="endInput">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </section>
+
+    <table>
+        <thead>
+            <th>Case Type</th>
+            <th>Date</th>
+            <th>Total</th>
+        </thead>
+        <tbody>            
+                @for (item of dataByPage(); track $index) {
+                    <tr>
+                        <td class="case-type">{{item.caseType}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.total}}</td>
+                    </tr>
+                }           
+        </tbody>
+    </table>
+    <button (click)="next()" mat-flat-button [disabled]="currentPage() === covidCases.getDataSize() - 1">Next</button>
+    <button (click)="prev()" mat-flat-button [disabled]="currentPage() === 1">Prev</button>   
 }

@@ -1,0 +1,23 @@
+th,td{
+    text-align: center;   
+}
+
+table{
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+button{
+    float: right;
+    margin: 10px;
+}
+
+.spinner, .date-range{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-range{
+    margin-bottom: 30px;
+}
