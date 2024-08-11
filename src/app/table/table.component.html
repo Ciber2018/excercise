@@ -1,4 +1,4 @@
-@if (covidCases.getDataSize() == 0) {
+@if (covidCases.isCurrentLoading()) {
     <section class="spinner">
         <mat-spinner />
     </section>
@@ -7,9 +7,9 @@
     <section class="date-range">
         <mat-form-field>
             <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate placeholder="Start date" (dateChange)="getDataByRangeDate('start',$event)" name="starInput">
-              <input matEndDate placeholder="End date" (dateChange)="getDataByRangeDate('end',$event)" name="endInput">
+            <mat-date-range-input [rangePicker]="picker">             
+              <input matStartDate placeholder="Start date" #start name="startDateField" (dateChange)="getDataByRangeDate(start.name,$any($event.target).value)" (input)="getDataByUserInput(start.name,$any($event.target).value)">
+              <input matEndDate placeholder="End date"  #end name="endDateField" (dateChange)="getDataByRangeDate(end.name,$any($event.target).value)" (input)="getDataByUserInput(end.name,$any($event.target).value)">
             </mat-date-range-input>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -23,16 +23,25 @@
             <th>Date</th>
             <th>Total</th>
         </thead>
-        <tbody>            
+        <tbody>
+            @if (dataByPage().length == 0) {
+                <tr>
+                    <td></td>
+                    <td>Data not found</td>
+                    <td></td>
+                </tr>
+            }@else {                         
                 @for (item of dataByPage(); track $index) {
                     <tr>
                         <td class="case-type">{{item.caseType}}</td>
                         <td>{{item.date}}</td>
                         <td>{{item.total}}</td>
                     </tr>
-                }           
+                } 
+            }            
+                          
         </tbody>
     </table>
-    <button (click)="next()" mat-flat-button [disabled]="currentPage() === covidCases.getDataSize() - 1">Next</button>
+    <button (click)="next()" mat-flat-button [disabled]="currentPage() === totalPage()">Next</button>
     <button (click)="prev()" mat-flat-button [disabled]="currentPage() === 1">Prev</button>   
 }

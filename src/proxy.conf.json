@@ -1,0 +1,7 @@
+{
+    "/cases": {
+      "target": "https://biostatistics.salud.pr.gov/",
+      "secure": false,
+      "changeOrigin":true
+    }
+  }

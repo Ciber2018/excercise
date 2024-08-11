@@ -21,3 +21,7 @@ button{
 .date-range{
     margin-bottom: 30px;
 }
+
+.not-found{
+    text-align: right;
+}
